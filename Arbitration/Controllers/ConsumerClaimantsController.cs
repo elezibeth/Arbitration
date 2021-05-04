@@ -962,10 +962,131 @@ namespace Arbitration.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageNotes));
         }
-        private bool AnticipatedAffirmativeDefenseExists(int id)
+        public async Task<IActionResult> ContactDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var partyInvolved = await _context.PartiesInvolved
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (partyInvolved == null)
+            {
+                return NotFound();
+            }
+
+            return View(partyInvolved);
+        }
+
+        // GET: PartyInvolveds/Create
+        public IActionResult CreateContact()
+        {
+            return View();
+        }
+
+
+        [HttpPost, ActionName("CreateContact")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateContact([Bind("Id,FirstName,LastName,Phone,Address,City,State,Company,Role")] PartyInvolved partyInvolved)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(partyInvolved);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ManagePartiesInvolved));
+            }
+            return View(partyInvolved);
+        }
+
+        // GET: PartyInvolveds/Edit/5
+        public async Task<IActionResult> EditContact(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var partyInvolved = await _context.PartiesInvolved.FindAsync(id);
+            if (partyInvolved == null)
+            {
+                return NotFound();
+            }
+            return View(partyInvolved);
+        }
+
+
+        [HttpPost, ActionName("EditContact")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditContact(int id, [Bind("Id,FirstName,LastName,Phone,Address,City,State,Company,Role")] PartyInvolved partyInvolved)
+        {
+            if (id != partyInvolved.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(partyInvolved);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PartyInvolvedExists(partyInvolved.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(ManagePartiesInvolved));
+            }
+            return View(partyInvolved);
+        }
+
+
+        public async Task<IActionResult> DeleteContact(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var partyInvolved = await _context.PartiesInvolved
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (partyInvolved == null)
+            {
+                return NotFound();
+            }
+
+            return View(partyInvolved);
+        }
+
+        // POST: PartyInvolveds/Delete/5
+        [HttpPost, ActionName("DeleteContact")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteContactConfirmed(int id)
+        {
+            var partyInvolved = await _context.PartiesInvolved.FindAsync(id);
+            _context.PartiesInvolved.Remove(partyInvolved);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManagePartiesInvolved));
+        }
+
+        private bool PartyInvolvedExists(int id)
+        {
+            return _context.PartiesInvolved.Any(e => e.Id == id);
+        }
+    
+    private bool AnticipatedAffirmativeDefenseExists(int id)
         {
             return _context.AnticipatedAffirmativeDefenses.Any(e => e.Id == id);
         }
+
 
         private bool ToDoItemExists(int id)
         {
