@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ManageAffirmativeDefenses</h1>
+<h1>Manage Affirmative Defenses</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateAffirmativeDefense">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -38,9 +38,8 @@
                 @Html.DisplayFor(modelItem => item.Neutralization)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="EditAffirmativeDefense" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DeleteAffirmativeDefense" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

@@ -97,7 +97,7 @@ namespace Arbitration.Controllers
             var aDef = _context.AnticipatedAffirmativeDefenses.Where(x => x.CaseTheoryId == theory.Id);
             if (applicationDbContext.Equals(null))
             {
-                return View("Create");
+                return View("CreateAffirmativeDefense");
             }
 
 
@@ -747,6 +747,32 @@ namespace Arbitration.Controllers
 
             return View(factualTheory);
         }
+        public IActionResult CreateAffirmativeDefense()
+        {
+            ViewData["CaseTheoryId"] = new SelectList(_context.CaseTheories, "Id", "Id");
+            return View();
+        }
+
+
+        [HttpPost, ActionName("CreateAffirmativeDefense")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAffirmativeDefense([Bind("Description,Neutralization")] AnticipatedAffirmativeDefense anticipatedAffirmativeDefense)
+        {
+            if (ModelState.IsValid)
+            {
+                var id = this.User.Identity;
+                var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+                var userId = user.Id;
+                var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+                var caseTheory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == cc.Id).FirstOrDefault();
+                anticipatedAffirmativeDefense.CaseTheoryId = caseTheory.Id;
+                _context.Add(anticipatedAffirmativeDefense);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ManageAffirmativeDefenses));
+            }
+            ViewData["CaseTheoryId"] = new SelectList(_context.CaseTheories, "Id", "Id", anticipatedAffirmativeDefense.CaseTheoryId);
+            return View(nameof(ManageAffirmativeDefenses));
+        }
 
 
         [HttpPost, ActionName("DeleteFactualTheory")]
@@ -757,6 +783,84 @@ namespace Arbitration.Controllers
             _context.FactualTheories.Remove(factualTheory);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageFactualTheories));
+        }
+        public async Task<IActionResult> DeleteAffirmativeDefense(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var anticipatedAffirmativeDefense = await _context.AnticipatedAffirmativeDefenses
+                .Include(a => a.CaseTheory)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (anticipatedAffirmativeDefense == null)
+            {
+                return NotFound();
+            }
+
+            return View(anticipatedAffirmativeDefense);
+        }
+
+
+        [HttpPost, ActionName("DeleteAffirmativeDefense")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAffirmativeDefenseConfirmed(int id)
+        {
+            var anticipatedAffirmativeDefense = await _context.AnticipatedAffirmativeDefenses.FindAsync(id);
+            _context.AnticipatedAffirmativeDefenses.Remove(anticipatedAffirmativeDefense);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageAffirmativeDefenses));
+        }
+
+        public async Task<IActionResult> EditAffirmativeDefense(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var anticipatedAffirmativeDefense = await _context.AnticipatedAffirmativeDefenses.FindAsync(id);
+            if (anticipatedAffirmativeDefense == null)
+            {
+                return NotFound();
+            }
+            return View(anticipatedAffirmativeDefense);
+        }
+
+
+        [HttpPost, ActionName("EditAffirmativeDefense")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAffirmativeDefense(int id, [Bind("Id,CaseTheoryId,Description,Neutralization")] AnticipatedAffirmativeDefense anticipatedAffirmativeDefense)
+        {
+        
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(anticipatedAffirmativeDefense);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AnticipatedAffirmativeDefenseExists(anticipatedAffirmativeDefense.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(ManageAffirmativeDefenses));
+            }
+          
+            return View(nameof(ManageAffirmativeDefenses));
+        }
+        private bool AnticipatedAffirmativeDefenseExists(int id)
+        {
+            return _context.AnticipatedAffirmativeDefenses.Any(e => e.Id == id);
         }
 
         private bool ToDoItemExists(int id)
