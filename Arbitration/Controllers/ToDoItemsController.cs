@@ -149,10 +149,41 @@ namespace Arbitration.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        // GET: ToDoItems/Delete/5
+        public async Task<IActionResult> DeleteToDoItem(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var toDoItem = await _context.ToDoItems
+                .Include(t => t.ConsumerClaimant)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (toDoItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(toDoItem);
+        }
+
+        // POST: ToDoItems/Delete/5
+        [HttpPost, ActionName("DeleteToDoItem")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteToDoItemConfirmed(int id)
+        {
+            var toDoItem = await _context.ToDoItems.FindAsync(id);
+            _context.ToDoItems.Remove(toDoItem);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         private bool ToDoItemExists(int id)
         {
             return _context.ToDoItems.Any(e => e.Id == id);
         }
+
+      
     }
 }

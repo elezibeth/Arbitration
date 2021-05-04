@@ -21,6 +21,11 @@ namespace Arbitration.Data
         public DbSet<ToDoItem> ToDoItems { get; set; }
         public DbSet<Notice> Notices { get; set; }
         public DbSet<Phase> Phases { get; set; }
+        public DbSet<PartyInvolved> PartiesInvolved { get; set; }
+        public DbSet<GeneralNotes> GeneralNotes { get; set; }
+        public DbSet<AnticipatedAffirmativeDefense> AnticipatedAffirmativeDefenses { get; set; }
+        public DbSet<TheoryEvent> TheoryEvents { get; set; }
+        public DbSet<Arbiter> Arbitrators { get; set; }
 
 
 

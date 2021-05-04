@@ -1,0 +1,173 @@
+﻿@model Arbitration.Models.CaseTheory
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Manage Parties Involved</h4>
+                <p class="card-text">Registration must be completed to unlock the application's full potential.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/create" role="button">Complete Registration Details</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Manage Arbitrators</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="lead">
+
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/edit" role="button">Edit Account Details</a>
+
+
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Keep Notes</h4>
+                <p class="card-text">In order to help guide you through the process, please provide a few details.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/createcasetheory" role="button">Register Case</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Affirmative Defenses</h4>
+                <p class="card-text">Registration must be completed to unlock the application's full potential.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/create" role="button">Complete Registration Details</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Factual Theory</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="lead">
+
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/edit" role="button">Edit Account Details</a>
+
+
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Case Theme</h4>
+                <p class="card-text">In order to help guide you through the process, please provide a few details.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/createcasetheory" role="button">Register Case</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h4>CaseTheory</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ConsumerClaimant)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ConsumerClaimant.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LawBroken)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LawBroken)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HowLawBroken)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HowLawBroken)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Perpetrator)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Perpetrator)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProofOfIntent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProofOfIntent)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InInitiation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InInitiation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InArbitratorInvitation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InArbitratorInvitation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InArbitratiorAppointment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InArbitratiorAppointment)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InPreliminaryHearing)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InPreliminaryHearing)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InAward)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InAward)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

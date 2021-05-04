@@ -35,6 +35,21 @@ namespace Arbitration.Controllers
             
             return View(await applicationDbContext.ToListAsync());
         }
+        public async Task<IActionResult> ManageCase()
+        {
+
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            var userId = user.Id;
+            var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+            var casetheory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == cc.Id).FirstOrDefault();
+            if (casetheory.Equals(null))
+            {
+                return View("CreateCaseTheory");
+            }
+
+            return View(casetheory);
+        }
 
         // GET: ConsumerClaimants/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -395,6 +410,7 @@ namespace Arbitration.Controllers
                     todo2.AlarmDate = notice.Date.AddDays(3);
                     todo2.Item = "Pay Fees.";
                     _context.Add(todo2);
+                    _context.SaveChanges();
                     
 
                 }
@@ -412,6 +428,7 @@ namespace Arbitration.Controllers
                     todo.DueDate = notice.Date.AddDays(5);
                     todo.DueDate = notice.Date.AddDays(3);
                     todo.Item = "Review arbitrators' disclosures and make objections.";
+                    todo.ConsumerClaimantId = cc.Id;
 
 
 
@@ -422,6 +439,7 @@ namespace Arbitration.Controllers
                     todo.Item = "Review Oath Documents.";
                     todo.DueDate = notice.Date.AddDays(5);
                     todo.AlarmDate = notice.Date.AddDays(3);
+                    todo.ConsumerClaimantId = cc.Id;
 
 
                 }
@@ -449,6 +467,7 @@ namespace Arbitration.Controllers
                     todo.AlarmDate = notice.Date.AddDays(2);
                     todo.Item = "Locate stenographer and update participants of requirement, if necessary";
                     _context.Add(todo4);
+                    _context.SaveChanges();
 
 
                 }
@@ -464,6 +483,7 @@ namespace Arbitration.Controllers
                     todo5.AlarmDate = notice.Date.AddDays(3);
                     todo5.Item = "Review all necessary evidence and preparation for hearing. Prepare evidence binder.";
                     _context.Add(todo5);
+                    _context.SaveChanges();
 
 
 
@@ -482,8 +502,10 @@ namespace Arbitration.Controllers
                     todo.Item = "Prepare written statements or arguments as necessary";
                     todo.DueDate = notice.Date.AddDays(3);
                     todo.AlarmDate = notice.Date.AddDays(1);
+                    
 
                 }
+                _context.Add(todo);
                 _context.Add(phase);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -518,6 +540,40 @@ namespace Arbitration.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> DeleteToDoItem(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var toDoItem = await _context.ToDoItems
+                .Include(t => t.ConsumerClaimant)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (toDoItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(toDoItem);
+        }
+
+        // POST: ToDoItems/Delete/5
+        [HttpPost, ActionName("DeleteToDoItem")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteToDoItemConfirmed(int id)
+        {
+            var toDoItem = await _context.ToDoItems.FindAsync(id);
+            _context.ToDoItems.Remove(toDoItem);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ToDoList));
+        }
+
+        private bool ToDoItemExists(int id)
+        {
+            return _context.ToDoItems.Any(e => e.Id == id);
+        }
+
 
         private bool NoticeExists(int id)
         {
