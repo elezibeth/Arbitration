@@ -858,6 +858,110 @@ namespace Arbitration.Controllers
           
             return View(nameof(ManageAffirmativeDefenses));
         }
+
+        public IActionResult CreateNote()
+        {
+
+            return View();
+        }
+
+
+        [HttpPost, ActionName("CreateNote")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateNote([Bind("Id,Date,Description")] GeneralNotes generalNotes)
+        {
+            if (ModelState.IsValid)
+            {
+                var id = this.User.Identity;
+                var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+                var userId = user.Id;
+                var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+                var caseTheory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == cc.Id).FirstOrDefault();
+                generalNotes.CaseTheoryId = caseTheory.Id;
+                _context.Add(generalNotes);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ManageNotes));
+            }
+            return View(nameof(ManageNotes));
+        }
+
+        public async Task<IActionResult> EditNote(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var generalNotes = await _context.GeneralNotes.FindAsync(id);
+            if (generalNotes == null)
+            {
+                return NotFound();
+            }
+            ViewData["CaseTheoryId"] = new SelectList(_context.CaseTheories, "Id", "Id", generalNotes.CaseTheoryId);
+            return View(generalNotes);
+        }
+
+
+        [HttpPost, ActionName("EditNote")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditNote(int id, [Bind("Id,CaseTheoryId,Date,Description")] GeneralNotes generalNotes)
+        {
+            if (id != generalNotes.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(generalNotes);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!GeneralNotesExists(generalNotes.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(ManageNotes));
+            }
+
+            return View(nameof(ManageNotes));
+        }
+        public async Task<IActionResult> DeleteNote(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var generalNotes = await _context.GeneralNotes
+                .Include(g => g.CaseTheory)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (generalNotes == null)
+            {
+                return NotFound();
+            }
+
+            return View(generalNotes);
+        }
+
+
+        [HttpPost, ActionName("DeleteNote")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteNoteConfirmed(int id)
+        {
+            var generalNotes = await _context.GeneralNotes.FindAsync(id);
+            _context.GeneralNotes.Remove(generalNotes);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageNotes));
+        }
         private bool AnticipatedAffirmativeDefenseExists(int id)
         {
             return _context.AnticipatedAffirmativeDefenses.Any(e => e.Id == id);
@@ -885,6 +989,10 @@ namespace Arbitration.Controllers
         private bool FactualTheoryExists(int id)
         {
             return _context.FactualTheories.Any(e => e.Id == id);
+        }
+        private bool GeneralNotesExists(int id)
+        {
+            return _context.GeneralNotes.Any(e => e.Id == id);
         }
 
     }
