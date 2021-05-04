@@ -4,14 +4,16 @@ using Arbitration.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Arbitration.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210504042615_Notices")]
+    partial class Notices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,47 +205,6 @@ namespace Arbitration.Data.Migrations
                     b.ToTable("Notices");
                 });
 
-            modelBuilder.Entity("Arbitration.Models.Phase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("AppointmentOfArbitrator")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ArbitratorsDisclosures")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CompletionOfHearing")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ConsumerClaimantId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("NoticeOfArbitratorSelection")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("NotificationOfFiling")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Schedule")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("SchedulingOrder")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("SignedOathDocument")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConsumerClaimantId");
-
-                    b.ToTable("Phases");
-                });
-
             modelBuilder.Entity("Arbitration.Models.ToDoItem", b =>
                 {
                     b.Property<int>("Id")
@@ -302,8 +263,8 @@ namespace Arbitration.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "951fcdc3-55f3-4f6b-8f97-d7a970f6b668",
-                            ConcurrencyStamp = "32300ddf-e37a-48fa-af19-3b3e2632bbfc",
+                            Id = "5f23e76b-84ae-43b3-bb06-6e1863444581",
+                            ConcurrencyStamp = "d3a58331-3055-4331-a95b-f801564c682a",
                             Name = "CommercialClaimant",
                             NormalizedName = "COMMERCIALCLAIMANT"
                         });
@@ -521,17 +482,6 @@ namespace Arbitration.Data.Migrations
                 });
 
             modelBuilder.Entity("Arbitration.Models.Notice", b =>
-                {
-                    b.HasOne("Arbitration.Models.ConsumerClaimant", "ConsumerClaimant")
-                        .WithMany()
-                        .HasForeignKey("ConsumerClaimantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ConsumerClaimant");
-                });
-
-            modelBuilder.Entity("Arbitration.Models.Phase", b =>
                 {
                     b.HasOne("Arbitration.Models.ConsumerClaimant", "ConsumerClaimant")
                         .WithMany()

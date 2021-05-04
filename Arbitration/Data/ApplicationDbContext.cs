@@ -19,6 +19,8 @@ namespace Arbitration.Data
         public DbSet<CaseTheme> CaseThemes { get; set; }
         public DbSet<FactualTheory> FactualTheories { get; set; }
         public DbSet<ToDoItem> ToDoItems { get; set; }
+        public DbSet<Notice> Notices { get; set; }
+        public DbSet<Phase> Phases { get; set; }
 
 
 

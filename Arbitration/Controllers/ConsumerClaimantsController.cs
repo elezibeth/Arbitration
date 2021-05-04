@@ -349,6 +349,180 @@ namespace Arbitration.Controllers
 
             return RedirectToAction(nameof(ToDoList));
         }
+        public async Task<IActionResult> NoticeList()
+        {
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            var userId = user.Id;
+            var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+            var applicationDbContext = _context.Notices.Where(n => n.ConsumerClaimantId == cc.Id);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        public IActionResult CreateNotice()
+        {
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateNotice([Bind("Type,From,Date,Content,NotificationOfFiling,NoticeOfArbitratorSelection,ArbitratorsDisclosures,SignedOathDocument,AppointmentOfArbitrator,Schedule,SchedulingOrder,CompletionOfHearing")] Notice notice)
+        {
+            if (ModelState.IsValid)
+            {
+                var id = this.User.Identity;
+                var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+                var userId = user.Id;
+                var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+                notice.ConsumerClaimantId = cc.Id;
+                var phase = new Phase();
+                phase.ConsumerClaimantId = cc.Id;
+                var todo = new ToDoItem();
+                todo.ConsumerClaimantId = cc.Id;
+
+
+                _context.Add(notice);
+                if(notice.NotificationOfFiling == true)
+                {
+                    phase.NotificationOfFiling = true;
+                    todo.DueDate = notice.Date.AddDays(5);
+                    todo.AlarmDate = notice.Date.AddDays(3);
+                    todo.Item = "Respond to notice";
+                    var todo2 = new ToDoItem();
+                    todo2.ConsumerClaimantId = cc.Id;
+                    todo2.DueDate = notice.Date.AddDays(5);
+                    todo2.AlarmDate = notice.Date.AddDays(3);
+                    todo2.Item = "Pay Fees.";
+                    _context.Add(todo2);
+                    
+
+                }
+                if(notice.NoticeOfArbitratorSelection == true)
+                {
+                    phase.NoticeOfArbitratorSelection = true;
+                    todo.DueDate = notice.Date.AddDays(5);
+                    todo.AlarmDate = notice.Date.AddDays(3);
+                    todo.Item = "Review arbitrators' conflicts of interest and make objection as soon as possible.";
+
+                }
+                if(notice.ArbitratorsDisclosures == true)
+                {
+                    phase.ArbitratorsDisclosures = true;
+                    todo.DueDate = notice.Date.AddDays(5);
+                    todo.DueDate = notice.Date.AddDays(3);
+                    todo.Item = "Review arbitrators' disclosures and make objections.";
+
+
+
+                }
+                if(notice.SignedOathDocument == true)
+                {
+                    phase.SignedOathDocument = true;
+                    todo.Item = "Review Oath Documents.";
+                    todo.DueDate = notice.Date.AddDays(5);
+                    todo.AlarmDate = notice.Date.AddDays(3);
+
+
+                }
+                if(notice.AppointmentOfArbitrator == true)
+                {
+                    phase.AppointmentOfArbitrator = true;
+                    todo.Item = "Review and make objections to arbitrator selection";
+                    todo.DueDate = notice.Date.AddDays(5);
+                    todo.AlarmDate = notice.Date.AddDays(3);
+                    var todo2 = new ToDoItem();
+                    todo2.ConsumerClaimantId = cc.Id;
+                    todo2.Item = "Prepare for hearing by gathering relevant information. Enter details in home page.";
+                    todo2.DueDate = notice.Date.AddDays(5);
+                    todo2.AlarmDate = notice.Date.AddDays(3);
+                    _context.Add(todo2);
+                    var todo3 = new ToDoItem();
+                    todo3.ConsumerClaimantId = cc.Id;
+                    todo3.DueDate = notice.Date.AddDays(5);
+                    todo3.AlarmDate = notice.Date.AddDays(3);
+                    todo3.Item = "Schedule hearing: will be accomplished with Arbitrator";
+                    _context.Add(todo3);
+                    var todo4 = new ToDoItem();
+                    todo4.ConsumerClaimantId = cc.Id;
+                    todo4.DueDate = notice.Date.AddDays(5);
+                    todo.AlarmDate = notice.Date.AddDays(2);
+                    todo.Item = "Locate stenographer and update participants of requirement, if necessary";
+                    _context.Add(todo4);
+
+
+                }
+                if(notice.Schedule == true)
+                {
+                    phase.Schedule = true;
+                    todo.Item = "Hire Stenographer: and update stenographer and other parties as necessary";
+                    todo.DueDate = notice.Date.AddDays(5);
+                    todo.AlarmDate = notice.Date.AddDays(3);
+                    var todo5 = new ToDoItem();
+                    todo5.ConsumerClaimantId = cc.Id;
+                    todo5.DueDate = notice.Date.AddDays(5);
+                    todo5.AlarmDate = notice.Date.AddDays(3);
+                    todo5.Item = "Review all necessary evidence and preparation for hearing. Prepare evidence binder.";
+                    _context.Add(todo5);
+
+
+
+                    
+                }
+                if(notice.SchedulingOrder == true)
+                {
+                    phase.SchedulingOrder = true;
+                    todo.Item = "Add Hearing date to todo items";
+                    todo.DueDate = notice.Date;
+
+                }
+                if(notice.CompletionOfHearing == true)
+                {
+                    phase.CompletionOfHearing = true;
+                    todo.Item = "Prepare written statements or arguments as necessary";
+                    todo.DueDate = notice.Date.AddDays(3);
+                    todo.AlarmDate = notice.Date.AddDays(1);
+
+                }
+                _context.Add(phase);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(nameof(NoticeList));
+        }
+        public async Task<IActionResult> DeleteNotice(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var notice = await _context.Notices
+                .Include(n => n.ConsumerClaimant)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (notice == null)
+            {
+                return NotFound();
+            }
+
+            return View(notice);
+        }
+
+        // POST: Notices/Delete/5
+        [HttpPost, ActionName("DeleteNotice")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteNoticeConfirmed(int id)
+        {
+            var notice = await _context.Notices.FindAsync(id);
+            _context.Notices.Remove(notice);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool NoticeExists(int id)
+        {
+            return _context.Notices.Any(e => e.Id == id);
+        }
 
         private bool ConsumerClaimantExists(int id)
         {
