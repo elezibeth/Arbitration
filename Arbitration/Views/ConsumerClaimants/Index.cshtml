@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Arbitration.Models.ConsumerClaimant>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Complete Registration</a>
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Complete Registration</h4>
+                <p class="card-text">Registration must be completed to unlock the application's full potential.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/create" role="button">Complete Registration Details</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Account Information</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="lead">
+                  
+                        <a class="btn btn-primary btn-lg" href="/consumerclaimants/edit" role="button">Edit Account Details</a>
+                    
+
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">register A case</h4>
+                <p class="card-text">In order to help guide you through the process, please provide a few details.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/createcasetheory" role="button">Register Case</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title">Just Do One Thing!</h4>
+                <p class="card-text">Stay on top of your case with an easy to follow list of next steps.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/todolist" role="button">See ToDo List</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <h4 class="card-title">Update your case.</h4>
+                    <p class="card-text">Edit your case details here at any time.</p>
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="/consumerclaimants/editcasetheory" role="button">Edit Case Details</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <h4 class="card-title">Factual Theories</h4>
+                    <p class="card-text">The Factual Theory of your case will help you support your case theory.</p>
+                    <p class="lead">
+                       
+                            <a class="btn btn-primary btn-lg" href="/consumerclaimants/factualtheory" role="button">Edit Factual Theories</a>
+                        
+
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header">Your Case Theme</div>
+                <div class="card-body">
+                    <h4 class="card-title">Consolidate a theme</h4>
+                    <p class="card-text">Your case theme helps you concicely share the main details of your case with the arbitrator and all others.</p>
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="/consumerclaimants/createcasetheme" role="button">Add Case Theme</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+            </tbody>
+        </table>

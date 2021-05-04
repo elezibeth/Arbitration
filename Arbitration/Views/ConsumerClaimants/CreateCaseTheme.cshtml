@@ -1,0 +1,40 @@
+﻿@model Arbitration.Models.CaseTheme
+
+@{
+    ViewData["Title"] = "CreateCaseTheme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CreateCaseTheme</h1>
+
+<h4>CaseTheme</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="CreateCaseTheme">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ArbiterChair" class="control-label">Arbitration chairperson</label>
+                <input asp-for="ArbiterChair" class="form-control" />
+                <span asp-validation-for="ArbiterChair" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoreTruth" class="control-label">This is the core truth of the case. Who did what, where, when, to whom, and why?</label>
+                <input asp-for="CoreTruth" class="form-control" />
+                <span asp-validation-for="CoreTruth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Home</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

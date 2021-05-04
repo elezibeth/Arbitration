@@ -1,0 +1,58 @@
+﻿@model Arbitration.Models.ConsumerClaimant
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ConsumerClaimant</h4>
+    <hr />
+    <dl class="row">
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdentityUser.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InArbitration)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InArbitration)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyDisputing)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CompanyDisputing)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ArbitrationLocation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ArbitrationLocation)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

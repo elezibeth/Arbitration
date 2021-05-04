@@ -1,0 +1,83 @@
+﻿@model Arbitration.Models.CaseTheory
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>CaseTheory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ConsumerClaimantId" class="control-label"></label>
+                <select asp-for="ConsumerClaimantId" class ="form-control" asp-items="ViewBag.ConsumerClaimantId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="LawBroken" class="control-label"></label>
+                <input asp-for="LawBroken" class="form-control" />
+                <span asp-validation-for="LawBroken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HowLawBroken" class="control-label"></label>
+                <input asp-for="HowLawBroken" class="form-control" />
+                <span asp-validation-for="HowLawBroken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Perpetrator" class="control-label"></label>
+                <input asp-for="Perpetrator" class="form-control" />
+                <span asp-validation-for="Perpetrator" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProofOfIntent" class="control-label"></label>
+                <input asp-for="ProofOfIntent" class="form-control" />
+                <span asp-validation-for="ProofOfIntent" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="InInitiation" /> @Html.DisplayNameFor(model => model.InInitiation)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="InArbitratorInvitation" /> @Html.DisplayNameFor(model => model.InArbitratorInvitation)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="InArbitratiorAppointment" /> @Html.DisplayNameFor(model => model.InArbitratiorAppointment)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="InPreliminaryHearing" /> @Html.DisplayNameFor(model => model.InPreliminaryHearing)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="InAward" /> @Html.DisplayNameFor(model => model.InAward)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

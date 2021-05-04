@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Arbitration.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +14,11 @@ namespace Arbitration.Data
             : base(options)
         {
         }
+        public DbSet<ConsumerClaimant> ConsumerClaimants { get; set; }
+        public DbSet<CaseTheory> CaseTheories { get; set; }
+        public DbSet<CaseTheme> CaseThemes { get; set; }
+        public DbSet<FactualTheory> FactualTheories { get; set; }
+        public DbSet<ToDoItem> ToDoItems { get; set; }
 
 
 
@@ -23,11 +29,8 @@ namespace Arbitration.Data
                 .HasData(
                    new IdentityRole
                    {
-
                        Name = "CommercialClaimant",
                        NormalizedName = "COMMERCIALCLAIMANT",
-
-
                    });
         }
     }

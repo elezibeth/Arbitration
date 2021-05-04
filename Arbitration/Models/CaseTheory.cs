@@ -20,5 +20,10 @@ namespace Arbitration.Models
         public string Perpetrator { get; set; }
         public string Location { get; set; }
         public string ProofOfIntent { get; set; }
+        public bool InInitiation { get; set; }
+        public bool InArbitratorInvitation { get; set; }
+        public bool InArbitratiorAppointment { get; set; }
+        public bool InPreliminaryHearing { get; set; }
+        public bool InAward { get; set; }
     }
 }

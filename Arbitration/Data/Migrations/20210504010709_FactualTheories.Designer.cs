@@ -4,14 +4,16 @@ using Arbitration.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Arbitration.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210504010709_FactualTheories")]
+    partial class FactualTheories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,35 +152,6 @@ namespace Arbitration.Data.Migrations
                     b.ToTable("FactualTheories");
                 });
 
-            modelBuilder.Entity("Arbitration.Models.ToDoItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("AlarmDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ConsumerClaimantId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateReceived")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Item")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConsumerClaimantId");
-
-                    b.ToTable("ToDoItems");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -208,8 +181,8 @@ namespace Arbitration.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "19eaa583-0230-4a39-97f5-dbd33ecfb864",
-                            ConcurrencyStamp = "e2d5fdcb-7afd-4ab0-a191-6dc72103ab65",
+                            Id = "ebe9a209-324a-48c5-afb7-3e7724cf1555",
+                            ConcurrencyStamp = "c1bc39fa-f642-4816-ac0c-ae7ca81b905c",
                             Name = "CommercialClaimant",
                             NormalizedName = "COMMERCIALCLAIMANT"
                         });
@@ -424,17 +397,6 @@ namespace Arbitration.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("CaseTheory");
-                });
-
-            modelBuilder.Entity("Arbitration.Models.ToDoItem", b =>
-                {
-                    b.HasOne("Arbitration.Models.ConsumerClaimant", "ConsumerClaimant")
-                        .WithMany()
-                        .HasForeignKey("ConsumerClaimantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ConsumerClaimant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

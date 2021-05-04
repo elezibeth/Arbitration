@@ -19,8 +19,7 @@ namespace Arbitration.Models
         public string Item { get; set; }
         public DateTime DateReceived { get; set; }
         public DateTime DueDate { get; set; }
-        public int DaysRemaining { get; set; }
-
+        public DateTime AlarmDate { get; set; }
 
 
 
