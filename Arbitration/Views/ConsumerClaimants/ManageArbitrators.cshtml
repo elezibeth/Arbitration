@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Arbitration.Models.Arbiter>
+
+@{
+    ViewData["Title"] = "ManageArbitrators";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ManageArbitrators</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CaseTheory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Points)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VocationalIndustry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AwardsToCompanies)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AwardsToClaimants)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LegalExperience)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsSelected)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RelationshipsWithParties)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasStockInCompany)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescriptionOfCOI)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaseTheory.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Points)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VocationalIndustry)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AwardsToCompanies)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AwardsToClaimants)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LegalExperience)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSelected)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelationshipsWithParties)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasStockInCompany)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionOfCOI)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

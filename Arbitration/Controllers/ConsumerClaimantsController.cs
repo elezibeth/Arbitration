@@ -35,6 +35,92 @@ namespace Arbitration.Controllers
             
             return View(await applicationDbContext.ToListAsync());
         }
+        public async Task<IActionResult> ManagePartiesInvolved()
+        {
+
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            var userId = user.Id;
+            var applicationDbContext = _context.ConsumerClaimants.Where(n => n.IdentityUserId == userId);
+            var parties = _context.PartiesInvolved;
+            if (applicationDbContext.Equals(null))
+            {
+                return View("Create");
+            }
+
+
+            return View(await parties.ToListAsync());
+        }
+
+        public async Task<IActionResult> ManageArbitrators()
+        {
+
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            var userId = user.Id;
+            var applicationDbContext = _context.ConsumerClaimants.Where(n => n.IdentityUserId == userId).FirstOrDefault();
+            var theory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == applicationDbContext.Id).FirstOrDefault();
+            var arbitrators = _context.Arbitrators.Where(x => x.CaseTheoryId == theory.Id);
+            if (applicationDbContext.Equals(null))
+            {
+                return View("Create");
+            }
+
+
+            return View(await arbitrators.ToListAsync());
+        }
+        public async Task<IActionResult> ManageNotes()
+        {
+
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            var userId = user.Id;
+            var applicationDbContext = _context.ConsumerClaimants.Where(n => n.IdentityUserId == userId).FirstOrDefault();
+            var theory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == applicationDbContext.Id).FirstOrDefault();
+            var notes = _context.GeneralNotes.Where(x => x.CaseTheoryId == theory.Id);
+            if (applicationDbContext.Equals(null))
+            {
+                return View("Create");
+            }
+
+
+            return View(await notes.ToListAsync());
+        }
+        public async Task<IActionResult> ManageAffirmativeDefenses()
+        {
+
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            var userId = user.Id;
+            var applicationDbContext = _context.ConsumerClaimants.Where(n => n.IdentityUserId == userId).FirstOrDefault();
+            var theory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == applicationDbContext.Id).FirstOrDefault();
+            var aDef = _context.AnticipatedAffirmativeDefenses.Where(x => x.CaseTheoryId == theory.Id);
+            if (applicationDbContext.Equals(null))
+            {
+                return View("Create");
+            }
+
+
+            return View(await aDef.ToListAsync());
+        }
+
+        public async Task<IActionResult> ManageFactualTheories()
+        {
+
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            var userId = user.Id;
+            var applicationDbContext = _context.ConsumerClaimants.Where(n => n.IdentityUserId == userId).FirstOrDefault();
+            var theory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == applicationDbContext.Id).FirstOrDefault();
+            var factualTheories = _context.FactualTheories.Where(x => x.CaseTheoryId == theory.Id);
+            if (applicationDbContext.Equals(null))
+            {
+                return View("Create");
+            }
+
+
+            return View(await factualTheories.ToListAsync());
+        }
         public async Task<IActionResult> ManageCase()
         {
 
@@ -103,20 +189,19 @@ namespace Arbitration.Controllers
         }
 
         // GET: ConsumerClaimants/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit()
         {
-            if (id == null)
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            var userId = user.Id;
+            var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+
+            if (cc == null)
             {
                 return NotFound();
             }
 
-            var consumerClaimant = await _context.ConsumerClaimants.FindAsync(id);
-            if (consumerClaimant == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", consumerClaimant.IdentityUserId);
-            return View(consumerClaimant);
+            return View(cc);
         }
 
         // POST: ConsumerClaimants/Edit/5
@@ -124,7 +209,7 @@ namespace Arbitration.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,PhoneNumber,InArbitration,CompanyDisputing,ArbitrationLocation")] ConsumerClaimant consumerClaimant)
+        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,PhoneNumber")] ConsumerClaimant consumerClaimant)
         {
             if (id != consumerClaimant.Id)
             {
@@ -568,6 +653,111 @@ namespace Arbitration.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ToDoList));
         }
+        public async Task<IActionResult> EditFactualTheory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var factualTheory = await _context.FactualTheories.FindAsync(id);
+            if (factualTheory == null)
+            {
+                return NotFound();
+            }
+            ViewData["CaseTheoryId"] = new SelectList(_context.CaseTheories, "Id", "Id", factualTheory.CaseTheoryId);
+            return View(factualTheory);
+        }
+
+
+        [HttpPost, ActionName("EditFactualTheory")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditFactualTheory(int id, [Bind("Id,CaseTheoryId,Name,Description,IsPrimary")] FactualTheory factualTheory)
+        {
+            if (id != factualTheory.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(factualTheory);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!FactualTheoryExists(factualTheory.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(ManageFactualTheories));
+            }
+            ViewData["CaseTheoryId"] = new SelectList(_context.CaseTheories, "Id", "Id", factualTheory.CaseTheoryId);
+            return RedirectToAction(nameof(ManageFactualTheories));
+        }
+        public IActionResult CreateFactualTheory()
+        {
+
+            return View(nameof(CreateFactualTheory));
+        }
+
+        // POST: FactualTheories/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost, ActionName("CreateFactualTheory")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFactualTheory([Bind("Name,Description,IsPrimary")] FactualTheory factualTheory)
+        {
+            if (ModelState.IsValid)
+            {
+                var id = this.User.Identity;
+                var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+                var userId = user.Id;
+                var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+                var caseTheory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == cc.Id).FirstOrDefault();
+                factualTheory.CaseTheoryId = caseTheory.Id;
+                _context.Add(factualTheory);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ManageFactualTheories));
+            }
+         
+            return View(nameof(ManageFactualTheories));
+        }
+        public async Task<IActionResult> DeleteFactualTheory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var factualTheory = await _context.FactualTheories
+                .Include(f => f.CaseTheory)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (factualTheory == null)
+            {
+                return NotFound();
+            }
+
+            return View(factualTheory);
+        }
+
+
+        [HttpPost, ActionName("DeleteFactualTheory")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFactualTheoryConfirmed(int id)
+        {
+            var factualTheory = await _context.FactualTheories.FindAsync(id);
+            _context.FactualTheories.Remove(factualTheory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageFactualTheories));
+        }
 
         private bool ToDoItemExists(int id)
         {
@@ -587,6 +777,10 @@ namespace Arbitration.Controllers
         private bool CaseTheoryExists(int id)
         {
             return _context.CaseTheories.Any(e => e.Id == id);
+        }
+        private bool FactualTheoryExists(int id)
+        {
+            return _context.FactualTheories.Any(e => e.Id == id);
         }
 
     }
