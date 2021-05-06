@@ -1,0 +1,70 @@
+﻿@model Arbitration.Models.Arbiter
+
+<h4>Arbiter</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateArbitrator">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="form-group">
+                <label asp-for="VocationalIndustry" class="control-label"></label>
+                <input asp-for="VocationalIndustry" class="form-control" />
+                <span asp-validation-for="VocationalIndustry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AwardsToCompanies" class="control-label"></label>
+                <input asp-for="AwardsToCompanies" class="form-control" />
+                <span asp-validation-for="AwardsToCompanies" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AwardsToClaimants" class="control-label"></label>
+                <input asp-for="AwardsToClaimants" class="form-control" />
+                <span asp-validation-for="AwardsToClaimants" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="LegalExperience" /> @Html.DisplayNameFor(model => model.LegalExperience)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsSelected" /> @Html.DisplayNameFor(model => model.IsSelected)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="RelationshipsWithParties" /> @Html.DisplayNameFor(model => model.RelationshipsWithParties)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="HasStockInCompany" /> @Html.DisplayNameFor(model => model.HasStockInCompany)
+                </label>
+            </div>
+            <div>Assign a point value based on initial liking of individual for your case. This can be changed later.</div>
+            <div class="form-group">
+                <label asp-for="Points" class="control-label"></label>
+                <input asp-for="Points" class="form-control" />
+                <span asp-validation-for="Points" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescriptionOfCOI" class="control-label"></label>
+                <input asp-for="DescriptionOfCOI" class="form-control" />
+                <span asp-validation-for="DescriptionOfCOI" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

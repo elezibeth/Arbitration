@@ -1,0 +1,72 @@
+﻿@model Arbitration.Models.PreferencesForArbitrator
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Preferences For Arbitrator</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateArbiterPreferences">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>The vocational industry you choose is a personal preference. While it might be beneficial to have someone who understands the industry, consider also hiring someone with industry experience in consumer rights. </div>
+
+            <div class="form-group">
+                <label asp-for="VocationalIndustry" class="control-label">Vocational Industry</label>
+                <input asp-for="VocationalIndustry" class="form-control" />
+                <span asp-validation-for="VocationalIndustry" class="text-danger"></span>
+            </div>
+            <div>Awards made to other companies is a large consideration when choosing an arbitrator. Arbitrators who have shown more favorable treatment to companies than consumers may be impartial during the proceedings.</div>
+            <div class="form-group">
+                <label asp-for="AwardsToCompanies" class="control-label">Awards made to other companies (preference)</label>
+                <input asp-for="AwardsToCompanies" class="form-control" />
+                <span asp-validation-for="AwardsToCompanies" class="text-danger"></span>
+            </div>
+            <div>Awards made to other claimants is another factor to consider. Arbitrators who only make awards to consumers may be rejected by the opposing party, leaving you with little say. They may not be impartial during the hearing.</div>
+            <div class="form-group">
+                <label asp-for="AwardsToClaimants" class="control-label">Awards made to other claimants you prefer.</label>
+                <input asp-for="AwardsToClaimants" class="form-control" />
+                <span asp-validation-for="AwardsToClaimants" class="text-danger"></span>
+            </div>
+            <div>Legal experience is a fact to consider during arbitration, although it is not necessary. Arbitrators must be aware of the relevant laws surrounding your case, but legal experience is not required to be considered as an arbitrator. Because most arbitration hearings are civil cases, are not considered legal action, and are considered a good-will dispute resolution option, this is not necessary. However, if you are more comfortable with an arbitrator who has legal experience for other reasons, that is OK. There is no wrong answer to your preference here. </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="LegalExperience" /> @Html.DisplayNameFor(model => model.LegalExperience)
+                </label>
+            </div>
+            <div>Relationships with other parties represent a conflict of interest, and reduce the likelihood of an impartial award. If you are OK with conflicts of interest, check the box. If not, leave it blank.</div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="RelationshipsWithParties" /> @Html.DisplayNameFor(model => model.RelationshipsWithParties)
+                </label>
+            </div>
+            <div>Stock in companies represents a conflict of interest if that company is the one you are disputing. It is an indication of preference for favorable personal outcome. This is also a personal preference.</div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="HasStockInCompany" /> @Html.DisplayNameFor(model => model.HasStockInCompany)
+                </label>
+            </div>
+            <div>This is an area you can describe which conflicts of interest you are or aren't ok with. Taking the time to consider your preferences now can help you make better decisions should you become stressed or otherwise emotional.</div>
+            <div class="form-group">
+                <label asp-for="DescriptionOfCOI" class="control-label"></label>
+                <input asp-for="DescriptionOfCOI" class="form-control" />
+                <span asp-validation-for="DescriptionOfCOI" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Home</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

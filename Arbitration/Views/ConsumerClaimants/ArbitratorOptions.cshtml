@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<Arbitration.Models.Arbiter>
 
 @{
-    ViewData["Title"] = "ManageArbitrators";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Manage Arbitrators</h1>
+<h1>Arbitrator Options</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a href="/ConsumerClaimants/CreateArbitrator">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -80,56 +80,11 @@
                 @Html.DisplayFor(modelItem => item.DescriptionOfCOI)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="EditArbitrator" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="ArbitratorDetails" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="DeleteArbitrator" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-<div class="row">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-            <div class="card-header"></div>
-            <div class="card-body">
-                <h4 class="card-title">Set Arbitrator Preferences</h4>
-                <p class="card-text">Learn about what makes an ideal arbitrator, and set your preferences.</p>
-                <p class="card-text">@ViewBag.Preferences</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/ArbitratorPreferences" role="button">Preferences</a>
-                </p>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-            <div class="card-header"></div>
-            <div class="card-body">
-                <h4 class="card-title">Arbitrator Choices</h4>
-                <p class="card-text">Your arbitrator list will be mailed to you. Enter them here to help keep track of the ones you prefer.</p>
-                <p class="lead">
-
-                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/ArbitratorOptions" role="button">See/Add Arbitrators</a>
-
-
-                </p>
-            </div>
-        </div>
-
-
-    </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-            <div class="card-header"></div>
-            <div class="card-body">
-                <h4 class="card-title">register A case</h4>
-                <p class="card-text">@ViewBag.Days</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="/consumerclaimants/createcasetheory" role="button">Register Case</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>

@@ -26,6 +26,7 @@ namespace Arbitration.Data
         public DbSet<AnticipatedAffirmativeDefense> AnticipatedAffirmativeDefenses { get; set; }
         public DbSet<TheoryEvent> TheoryEvents { get; set; }
         public DbSet<Arbiter> Arbitrators { get; set; }
+        public DbSet<PreferencesForArbitrator> PreferedArbitratorAttributes { get; set; }
 
 
 
