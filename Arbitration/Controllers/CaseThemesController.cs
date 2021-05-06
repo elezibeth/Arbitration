@@ -49,6 +49,7 @@ namespace Arbitration.Controllers
         public IActionResult CreateCaseTheme()
         {
             ViewData["CaseTheoryId"] = new SelectList(_context.CaseTheories, "Id", "Id");
+            ViewBag["name"] = _context.ConsumerClaimants.Where(x => x.FirstName == "Liz");
             return View();
         }
 

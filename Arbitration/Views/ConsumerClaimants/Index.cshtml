@@ -46,7 +46,7 @@
             <div class="card-header"></div>
             <div class="card-body">
                 <h4 class="card-title">register A case</h4>
-                <p class="card-text">In order to help guide you through the process, please provide a few details.</p>
+                <p class="card-text">@ViewBag.Days</p>
                 <p class="lead">
                     <a class="btn btn-primary btn-lg" href="/consumerclaimants/createcasetheory" role="button">Register Case</a>
                 </p>
@@ -61,6 +61,7 @@
             <div class="card-body">
                 <h4 class="card-title">Just Do One Thing!</h4>
                 <p class="card-text">Stay on top of your case with an easy to follow list of next steps.</p>
+                <p class="card-text">@ViewBag.Todo</p>
                 <p class="lead">
                     <a class="btn btn-primary btn-lg" href="/consumerclaimants/todolist" role="button">See ToDo List</a>
                 </p>
@@ -85,6 +86,7 @@
             <div class="card-body">
                 <h4 class="card-title">Manage Case</h4>
                 <p class="card-text">Manage the details of your case.</p>
+                <p class="card-tex">@ViewBag.phase</p>
                 <p class="lead">
                     <a class="btn btn-primary btn-lg" href="/consumerclaimants/ManageCase" role="button">Manage Case</a>
                 </p>

@@ -31,6 +31,81 @@ namespace Arbitration.Controllers
             {
                 return View("Create");
             }
+            var cc = applicationDbContext.FirstOrDefault();
+            var phase = _context.Phases.Where(x => x.ConsumerClaimantId == cc.Id);
+            var ph = phase.OrderByDescending(x => x.Id).Last();
+            
+            if(ph.NoticeOfArbitratorSelection == true)
+            {
+                ViewBag.phase = "Current Phase: Arbitrator Invitation.";
+            }
+            if(ph.NotificationOfFiling == true)
+            {
+                ViewBag.phase = "Current Phase: Initiation.";
+            }
+            if(ph.AppointmentOfArbitrator == true)
+            {
+                ViewBag.phase = "Current Phase: Arbitrator appointment phase.";
+            }
+            if(ph.ArbitratorsDisclosures == true)
+            {
+                ViewBag.phase = "Current Phase: Arbitrator invitation.";
+            }
+            if(ph.CompletionOfHearing == true)
+            {
+                ViewBag.phase = "Current Phase: Award.";
+            }
+            if(ph.SignedOathDocument == true)
+            {
+                ViewBag.phase = "Current Phase: Arbitrator invitation.";
+            }
+            if(ph.SchedulingOrder == true)
+            {
+                ViewBag.phase = "Current Phase: Hearing.";
+            }
+            if (ph.Schedule)
+            {
+                ViewBag.phase = "Current Phase: Hearing.";
+            }
+            if(ph == null)
+            {
+                ViewBag.phase = "Current phase unknown.";
+            }
+            var cci = applicationDbContext.FirstOrDefault();
+            var notices = _context.Notices.Where(x => x.ConsumerClaimantId == cci.Id);
+            var notice = notices.Where(x => x.NotificationOfFiling == true).OrderBy(x => x.Date).LastOrDefault();
+            if(notice != null)
+            {
+                var dateTimeThis = notice.Date;
+                var date = dateTimeThis.Date;
+                var todayDateTime = DateTime.Now;
+                var today = todayDateTime.Date;
+                var TimespanInDays = today - date;
+                var doubleDays = TimespanInDays.TotalDays;
+                var stringDays = doubleDays.ToString();
+                ViewBag.Days = "Your case has been active for " + stringDays + " days. There is no need to register your case again.";
+
+
+            }
+            else
+            {
+                ViewBag.Days = "";
+            }
+            
+            var toDo = _context.ToDoItems.Where(x => x.ConsumerClaimantId == cci.Id).OrderBy(y => y.DueDate).FirstOrDefault();
+            if(toDo != null)
+            {
+                var toDoItem = toDo.Item;
+                var toDoItemDueDate = toDo.DueDate.Date;
+                ViewBag.ToDo = ($"Your next to do item is :'{toDoItem}' Due on {toDoItemDueDate.Date}");
+            }
+            else
+            {
+                ViewBag.Todo = "You have nothing due at this time.";
+            }
+
+
+
               
             
             return View(await applicationDbContext.ToListAsync());
