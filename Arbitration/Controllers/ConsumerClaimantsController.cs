@@ -1193,6 +1193,16 @@ namespace Arbitration.Controllers
                 var caseTheory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == cc.Id).FirstOrDefault();
                 preferencesForArbitrator.CaseTheoryId = caseTheory.Id;
                 _context.Add(preferencesForArbitrator);
+                var comparer = new Arbitrator();
+                comparer.FirstName = "MyPreferences";
+                comparer.DescriptionOfCOI = preferencesForArbitrator.DescriptionOfCOI;
+                comparer.AwardsToClaimants = preferencesForArbitrator.AwardsToClaimants;
+                comparer.AwardsToCompanies = preferencesForArbitrator.AwardsToCompanies;
+                comparer.HasStockInCompany = preferencesForArbitrator.HasStockInCompany;
+                comparer.RelationshipsWithParties = preferencesForArbitrator.RelationshipsWithParties;
+                comparer.VocationalIndustry = preferencesForArbitrator.VocationalIndustry;
+                comparer.CaseTheoryId = preferencesForArbitrator.CaseTheoryId;
+                _context.Add(comparer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(ArbitratorPreferences));
             }
