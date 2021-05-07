@@ -1220,6 +1220,8 @@ namespace Arbitration.Controllers
             {
                 return NotFound();
             }
+
+
             ViewData["CaseTheoryId"] = new SelectList(_context.CaseTheories, "Id", "Id", preferencesForArbitrator.CaseTheoryId);
             return View(preferencesForArbitrator);
         }
@@ -1238,7 +1240,18 @@ namespace Arbitration.Controllers
             {
                 try
                 {
+                    var comparerOne = _context.Arbitratorss.Where(x => x.FirstName == "MyPreferences").ToList();
+                    var comparer = comparerOne.Where(x => x.CaseTheoryId == preferencesForArbitrator.CaseTheoryId).FirstOrDefault();
+
+                    comparer.DescriptionOfCOI = preferencesForArbitrator.DescriptionOfCOI;
+                    comparer.AwardsToClaimants = preferencesForArbitrator.AwardsToClaimants;
+                    comparer.AwardsToCompanies = preferencesForArbitrator.AwardsToCompanies;
+                    comparer.HasStockInCompany = preferencesForArbitrator.HasStockInCompany;
+                    comparer.RelationshipsWithParties = preferencesForArbitrator.RelationshipsWithParties;
+                    comparer.VocationalIndustry = preferencesForArbitrator.VocationalIndustry;
+                    comparer.CaseTheoryId = preferencesForArbitrator.CaseTheoryId;
                     _context.Update(preferencesForArbitrator);
+                    _context.Update(comparer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
