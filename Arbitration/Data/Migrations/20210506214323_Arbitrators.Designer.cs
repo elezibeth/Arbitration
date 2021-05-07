@@ -4,14 +4,16 @@ using Arbitration.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Arbitration.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210506214323_Arbitrators")]
+    partial class Arbitrators
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,24 +292,6 @@ namespace Arbitration.Data.Migrations
                     b.ToTable("GeneralNotes");
                 });
 
-            modelBuilder.Entity("Arbitration.Models.NamesViewModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ArbitratorName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondArbitratorName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Names");
-                });
-
             modelBuilder.Entity("Arbitration.Models.Notice", b =>
                 {
                     b.Property<int>("Id")
@@ -563,8 +547,8 @@ namespace Arbitration.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a59de089-5677-470c-b4b6-8d6240738227",
-                            ConcurrencyStamp = "20df11be-987d-421e-89aa-454ec4229502",
+                            Id = "c73261e6-4eeb-4b9a-9cb6-5a60b3daf999",
+                            ConcurrencyStamp = "938412a3-0589-4292-981b-8f074f145da2",
                             Name = "CommercialClaimant",
                             NormalizedName = "COMMERCIALCLAIMANT"
                         });

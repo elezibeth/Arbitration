@@ -1269,7 +1269,7 @@ namespace Arbitration.Controllers
             var userId = user.Id;
             var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
             var caseTheory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == cc.Id).FirstOrDefault();
-            var arbitrators = _context.Arbitrators.Where(x => x.CaseTheoryId == caseTheory.Id);
+            var arbitrators = _context.Arbitratorss.Where(x => x.CaseTheoryId == caseTheory.Id);
             return View(await arbitrators.ToListAsync());
         }
         public IActionResult CreateArbitrator()
@@ -1281,7 +1281,7 @@ namespace Arbitration.Controllers
 
         [HttpPost("CreateArbitrator")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateArbitrator([Bind("Points,VocationalIndustry,AwardsToCompanies,AwardsToClaimants,LegalExperience,IsSelected,RelationshipsWithParties,HasStockInCompany,DescriptionOfCOI")] Arbiter arbiter)
+        public async Task<IActionResult> CreateArbitrator([Bind("FirstName,LastName,Points,VocationalIndustry,AwardsToCompanies,AwardsToClaimants,LegalExperience,IsSelected,RelationshipsWithParties,HasStockInCompany,DescriptionOfCOI")] Arbitrator arbiter)
         {
             if (ModelState.IsValid)
             {
@@ -1309,7 +1309,7 @@ namespace Arbitration.Controllers
                 return NotFound();
             }
 
-            var arbiter = await _context.Arbitrators.FindAsync(id);
+            var arbiter = await _context.Arbitratorss.FindAsync(id);
             if (arbiter == null)
             {
                 return NotFound();
@@ -1321,7 +1321,7 @@ namespace Arbitration.Controllers
 
         [HttpPost, ActionName("EditArbitrator")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditArbitrator(int id, [Bind("Id,CaseTheoryId,Points,VocationalIndustry,AwardsToCompanies,AwardsToClaimants,LegalExperience,IsSelected,RelationshipsWithParties,HasStockInCompany,DescriptionOfCOI")] Arbiter arbiter)
+        public async Task<IActionResult> EditArbitrator(int id, [Bind("Id,FirstName,LastName,CaseTheoryId,Points,VocationalIndustry,AwardsToCompanies,AwardsToClaimants,LegalExperience,IsSelected,RelationshipsWithParties,HasStockInCompany,DescriptionOfCOI")] Arbitrator arbiter)
         {
             if (id != arbiter.Id)
             {
@@ -1358,7 +1358,7 @@ namespace Arbitration.Controllers
                 return NotFound();
             }
 
-            var arbiter = await _context.Arbitrators
+            var arbiter = await _context.Arbitratorss
                 .Include(a => a.CaseTheory)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (arbiter == null)
@@ -1374,10 +1374,76 @@ namespace Arbitration.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteArbitratorConfirmed(int id)
         {
-            var arbiter = await _context.Arbitrators.FindAsync(id);
-            _context.Arbitrators.Remove(arbiter);
+            var arbiter = await _context.Arbitratorss.FindAsync(id);
+            _context.Arbitratorss.Remove(arbiter);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ArbitratorOptions));
+        }
+        public async Task<IActionResult> ArbitratorDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var arbiter = await _context.Arbitratorss
+                .Include(a => a.CaseTheory)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (arbiter == null)
+            {
+                return NotFound();
+            }
+
+            return View(arbiter);
+        }
+        public async Task<IActionResult> CompareArbitrators()
+        {
+            var id = this.User.Identity;
+            var user = _context.Users.Where(x => x.UserName == id.Name).FirstOrDefault();
+            if (user == null)
+            {
+                return RedirectToAction(nameof(Create));
+            }
+            var userId = user.Id;
+            var cc = _context.ConsumerClaimants.Where(x => x.IdentityUserId == userId).FirstOrDefault();
+            var caseTheory = _context.CaseTheories.Where(x => x.ConsumerClaimantId == cc.Id).FirstOrDefault();
+            var arbitrators = _context.Arbitratorss.Where(x => x.CaseTheoryId == caseTheory.Id).Select(f => f.FirstName).AsEnumerable();
+
+
+
+            ViewBag.Arbitrators = new SelectList(arbitrators);
+           
+       
+            return View();
+        }
+        
+
+        [HttpPost, ActionName("CompareArbitratorsC")]
+        public ActionResult CompareArbitratorDetails([Bind("ArbitratorName,SecondArbitratorName")] NamesViewModel names)
+        {
+            var arbitrator = _context.Arbitratorss.Where(x => x.FirstName == names.ArbitratorName).ToList();
+            var arbitratorTwo = _context.Arbitratorss.Where(x => x.FirstName == names.SecondArbitratorName).FirstOrDefault();
+            arbitrator.Add(arbitratorTwo);
+
+            return View(arbitrator);
+        }
+   
+        public async Task<IActionResult> ArbitratorDetailsPartial(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var arbiter = await _context.Arbitrators
+                .Include(a => a.CaseTheory)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (arbiter == null)
+            {
+                return NotFound();
+            }
+
+            return View(arbiter);
         }
 
 

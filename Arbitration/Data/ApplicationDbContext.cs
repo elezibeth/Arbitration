@@ -27,6 +27,8 @@ namespace Arbitration.Data
         public DbSet<TheoryEvent> TheoryEvents { get; set; }
         public DbSet<Arbiter> Arbitrators { get; set; }
         public DbSet<PreferencesForArbitrator> PreferedArbitratorAttributes { get; set; }
+        public DbSet<Arbitrator> Arbitratorss { get; set; }
+        public DbSet<NamesViewModel> Names { get; set; }
 
 
 

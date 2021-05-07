@@ -1,4 +1,4 @@
-﻿@model Arbitration.Models.Arbiter
+﻿@model Arbitration.Models.Arbitrator
 
 <h4>Arbiter</h4>
 <hr />
@@ -6,20 +6,30 @@
     <div class="col-md-4">
         <form asp-action="CreateArbitrator">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label">First Name</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label">Last Name</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
 
 
             <div class="form-group">
-                <label asp-for="VocationalIndustry" class="control-label"></label>
+                <label asp-for="VocationalIndustry" class="control-label">Vocation/Industry</label>
                 <input asp-for="VocationalIndustry" class="form-control" />
                 <span asp-validation-for="VocationalIndustry" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AwardsToCompanies" class="control-label"></label>
+                <label asp-for="AwardsToCompanies" class="control-label">Awards Made to Companies</label>
                 <input asp-for="AwardsToCompanies" class="form-control" />
                 <span asp-validation-for="AwardsToCompanies" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AwardsToClaimants" class="control-label"></label>
+                <label asp-for="AwardsToClaimants" class="control-label">Awards Made to Claimants</label>
                 <input asp-for="AwardsToClaimants" class="form-control" />
                 <span asp-validation-for="AwardsToClaimants" class="text-danger"></span>
             </div>
@@ -50,7 +60,7 @@
                 <span asp-validation-for="Points" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DescriptionOfCOI" class="control-label"></label>
+                <label asp-for="DescriptionOfCOI" class="control-label">Describe Conflicts of Interest</label>
                 <input asp-for="DescriptionOfCOI" class="form-control" />
                 <span asp-validation-for="DescriptionOfCOI" class="text-danger"></span>
             </div>
@@ -62,7 +72,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ArbitratorOptions">Back to List</a>
 </div>
 
 @section Scripts {

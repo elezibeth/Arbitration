@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Arbitration.Models.Arbitrator>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Compare Arbitrators To Each Other</h1>
+<a asp-action="CompareArbitrators">Try Again</a> |
+<a asp-action="ManageArbitrators">Manage Arbitrator's Home</a> 
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CaseTheory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Points)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VocationalIndustry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AwardsToCompanies)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AwardsToClaimants)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LegalExperience)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsSelected)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RelationshipsWithParties)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasStockInCompany)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescriptionOfCOI)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CaseTheory.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Points)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VocationalIndustry)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AwardsToCompanies)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AwardsToClaimants)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LegalExperience)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsSelected)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RelationshipsWithParties)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasStockInCompany)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescriptionOfCOI)
+                </td>
+                <td>
+
+                    <a asp-action="EditArbitrator" asp-route-id="@item.Id">Update This Arbitrator</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
